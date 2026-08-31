@@ -194,22 +194,51 @@ Here is the updated, complete index.html file. It combines the 3D isometric layo
                 -4px 4px 0px 3px #3a2212; 
         }
 
-        /* 🍓 FRESH STRAWBERRIES */
+                /* 🍓 FRESH STRAWBERRIES: Sliced cross-section look */
         .strawberry-row { 
-            background: #f43f5e; 
+            background: rgba(244, 63, 94, 0.15); 
             box-shadow: 
-                -10px 10px 0px #be123c, 
-                -10px 10px 0px 3px #3a2212; 
+                -8px 8px 0px #be123c, 
+                -8px 8px 0px 3px #3a2212; 
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-evenly;
+            border-radius: 8px;
         }
+
         .berry {
-            width: 35px;
-            height: 35px;
-            background: #ffe4e6;
-            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at 50% 50%, #fff1f2 0%, #fda4af 35%, #e11d48 70%, #9f1239 100%);
+            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
             border: 2px solid #3a2212;
+            position: relative;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Inner white core starburst */
+        .berry::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+            opacity: 0.85;
+        }
+
+        /* Seed details on the outer rim */
+        .berry::after {
+            content: '•  •\n•  •';
+            white-space: pre;
+            position: absolute;
+            color: #fef08a;
+            font-size: 7px;
+            top: 6px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 0px #3a2212;
         }
 
         /* 🥭 MIYAZAKI MANGO */
