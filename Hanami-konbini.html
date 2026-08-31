@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hanami's Konbini 🏪</title>
+    <style>
+        /* 📜 GLOBAL LAYOUT & THEME */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #faf6f0; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        /* 🏮 CUSTOM CAFE TITLE BANNER */
+        .cafe-banner {
+            text-align: center;
+            background: linear-gradient(135deg, #7a5c43, #5c4d43);
+            padding: 20px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(92, 77, 67, 0.15);
+            margin-bottom: 25px;
+            border: 4px double #ebdcd0;
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .cafe-banner h1 { 
+            color: #fffdfa; 
+            margin: 0 0 6px 0; 
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 800;
+        }
+        
+        .cafe-banner p { 
+            color: #ebdcd0; 
+            margin: 0; 
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .container { 
+            display: flex; 
+            flex-direction: row; 
+            justify-content: center; 
+            gap: 30px; 
+            max-width: 800px; 
+            width: 100%;
+        }
+
+        /* 🎛️ CONTROL PANEL & LOG SYSTEM */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 320px;
+            flex-shrink: 0;
+        }
+
+        .controls { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(139,121,102,0.1); 
+            border: 1px solid #ebdcd0; 
+        }
+
+        label { 
+            font-weight: bold; 
+            color: #5c4d43; 
+            font-size: 14px; 
+            display: block; 
+            margin-top: 10px; 
+        }
+        
+        select, button { 
+            width: 100%; 
+            padding: 12px; 
+            font-size: 15px; 
+            margin: 8px 0; 
+            border-radius: 8px; 
+            border: 1px solid #dcd1c4; 
+            box-sizing: border-box; 
+            background-color: #fcfbfa; 
+        }
+        
+        .btn-build { background-color: #cca47c; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-build:hover { background-color: #b38b65; }
+        .btn-eat { background-color: #df7a6a; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-eat:hover { background-color: #c95d4d; }
+        
+        /* 📟 LIVE CODE STREAM TERMINAL */
+        .terminal-log {
+            background-color: #1e1e1e;
+            color: #a6e22e;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            font-size: 12px;
+            height: 140px;
+            overflow-y: auto;
+            border: 2px solid #3e3e3e;
+        }
+        .terminal-title { color: #f8f8f2; font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #3e3e3e; padding-bottom: 4px; display: flex; justify-content: space-between; }
+        .log-ln { margin: 4px 0; white-space: pre-wrap; }
+        .log-hardware { color: #66d9ef; }
+        .log-binary { color: #f92672; }
+
+        /* 🍽️ CAFE CANVAS AREA */
+        .kitchen-floor { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-end; 
+            width: 360px; 
+            height: 440px; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(139,121,102,0.08); 
+            position: relative; 
+            padding-bottom: 30px; 
+            overflow: hidden; 
+            border: 1px solid #ebdcd0; 
+            flex-shrink: 0;
+        }
+        
+        .plate { 
+            width: 280px; 
+            height: 12px; 
+            background-color: #fcfcfc; 
+            border-bottom: 5px solid #e3e3e3; 
+            border-radius: 20px; 
+            z-index: 10; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
+        }
+
+        /* 🍞 PHYSICS & ANIMATION ENGINE */
+        .layer { 
+            width: 200px; 
+            opacity: 0; 
+            transform: translateY(-600px); 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.25), opacity 0.2s; 
+            z-index: 5; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+        
+        /* Shokupan Bread */
+        .shokupan { height: 45px; background-color: #fffdf5; border: 3px solid #f6f1e5; border-radius: 25px 25px 12px 12px; box-shadow: inset 0 -4px 0 #f3edd9; }
+        
+        /* Whipped Cream */
+        .cream-base { height: 22px; width: 190px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.05); border: 2px dashed #f1f5f9; display: flex; justify-content: space-around; }
+        .cream-puff { width: 26px; height: 22px; background: white; border-radius: 50%; margin-top: -5px; }
+
+        /* Matcha Cream */
+        .matcha-base { height: 22px; width: 190px; background-color: #7fa655; border-radius: 10px; border: 2px dashed #62873a; }
+
+        /* Tonkatsu Sauce */
+        .sauce-base { height: 12px; width: 186px; background-color: #4a2312; border-radius: 4px; position: relative; }
+        .sauce-drip { position: absolute; width: 8px; height: 14px; background: #4a2312; border-radius: 0 0 4px 4px; top: 8px; left: 30px; box-shadow: 50px 0 0 #4a2312, 100px 0 0 #4a2312; }
+
+        /* Fresh Strawberries Row */
+        .strawberry-row { height: 50px; width: 190px; background: transparent; display: flex; justify-content: center; gap: 10px; }
+        .berry { width: 0; height: 0; border-left: 22px solid transparent; border-right: 22px solid transparent; border-bottom: 40px solid #f43f5e; position: relative; filter: drop-shadow(0 3px 2px rgba(0,0,0,0.1)); }
+        .berry::after { content: '.. ..'; position: absolute; color: #fef08a; font-size: 9px; top: 18px; left: -10px; width: 20px; text-align: center; }
+
+        /* Mango Cubes Row */
+        .mango-row { height: 40px; width: 190px; display: flex; justify-content: space-around; align-items: center; }
+        .mango-cube { width: 40px; height: 32px; background-color: #fb923c; border-radius: 8px; border-bottom: 4px solid #ea580c; }
+
+        /* Crispy Pork Katsu Cutlet */
+        .katsu-block { height: 50px; width: 194px; background-color: #cca45c; border: 3px solid #b3873b; border-radius: 10px; box-shadow: inset 0 0 12px #9e7328; position: relative; }
+        .katsu-texture { position: absolute; width: 100%; height: 100%; background-image: radial-gradient(#b3873b 20%, transparent 20%); background-size: 8px 8px; opacity: 0.4; }
+
+        /* Fluffy Tamago Omelet */
+        .tamago-block { height: 45px; width: 192px; background-color: #fcd34d; border-radius: 8px; border-bottom: 5px solid #f59e0b; box-shadow: inset 0 4px 0 #fef08a; }
+
+        /* Trigger Utility States */
+        .dropped { opacity: 1; transform: translateY(0); margin-bottom: -6px; }
+        .eaten { transform: scale(0) rotate(15deg); opacity: 0; transition: all 0.35s ease-in; }
+        
+        #status-text { font-weight: bold; color: #8a7b71; min-height: 24px; margin-top: 15px; font-size: 15px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="cafe-banner">
+        <h1>HANAMI'S KONBINI</h1>
+        <p>Fresh Tokyo-Style E-Eats ⇄ 8-Bit Hardware Bus</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="left-panel">
+            <div class="controls">
+                <label>1. Select Base Layer:</label>
+                <select id="spreadChoice">
+                    <option value="cream-base">Sweet Whipped Cream</option>
+                    <option value="matcha-base">Uji Matcha Cream</option>
+                    <option value="sauce-base">Savory Tonkatsu Sauce</option>
+                </select>
+
+                <label>2. Select Center Filling:</label>
+                <select id="toppingChoice">
+                    <option value="strawberry-row">Fresh Strawberries 🍓</option>
+                    <option value="mango-row">Miyazaki Mango 🥭</option>
+                    <option value="katsu-block">Crispy Pork Katsu 🥩</option>
+                    <option value="tamago-block">Thick Tamago Omelet 🍳</option>
+                </select>
+
+                <button class="btn-build" onclick="startPreparation()">Assemble Sando</button>
+                <button class="btn-eat" onclick="eatSandwich()">Itadakimasu! (Eat)</button>
+                
+                <div id="status-text">System initialization ready...</div>
+            </div>
+
+            <div class="terminal-log">
+                <div class="terminal-title"><span>CPU Instruction Register</span><span>8-Bit Bus</span></div>
+                <div id="terminal-body">// Awaiting code execution loop...</div>
+            </div>
+        </div>
+
+        <div class="kitchen-floor">
+            <div id="top-bread" class="layer"></div>
+            <div id="layer-topping" class="layer"></div>
+            <div id="layer-spread" class="layer"></div>
+            <div id="bottom-bread" class="layer"></div>
+            <div class="plate"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function postLog(assemblyText, binaryText) {
+            var terminal = document.getElementById("terminal-body");
+
+            if (terminal.innerHTML.indexOf("// Awaiting") !== -1) {
+                terminal.innerHTML = "";
+            }
+            terminal.innerHTML += '<div class="log-ln"><span class="log-hardware">' + 
+                assemblyText + '</span> -&gt; <span class="log-binary">' + 
+                binaryText + '</span></div>';
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function startPreparation() {
+            var bBread = document.getElementById("bottom-bread");
+            var spreadL = document.getElementById("layer-spread");
+            var toppingL = document.getElementById("layer-topping");
+            var tBread = document.getElementById("top-bread");
+            var status = document.getElementById("status-text");
+            var terminal = document.getElementById("terminal-body");
+
+            terminal.innerHTML = "";
+            bBread.className = "layer"; bBread.innerHTML = "";
+            spreadL.className = "layer"; spreadL.innerHTML = "";
+            toppingL.className = "layer"; toppingL.innerHTML = "";
+            tBread.className = "layer"; tBread.innerHTML = "";
+
+            var spreadType = document.getElementById("spreadChoice").value;
+            var toppingType = document.getElementById("toppingChoice").value;
+
+            status.innerHTML = "Slicing Shokupan milk bread base...";
+            postLog("ALLOC_MEM bread_base", "10001000");
+
+            setTimeout(function() {
+                bBread.className = "layer shokupan dropped";
+                status.innerHTML = "Spreading the canvas layer...";
+                postLog("LOAD_REG spread_val", "10101010");
+                postLog("RENDER_OBJ " + spreadType, "11001100");
+            }, 700);
+
+            setTimeout(function() {
+                spreadL.className = "layer " + spreadType + " dropped";
+                if(spreadType === "cream-base") {
+                    spreadL.innerHTML = '<div class="cream-puff"></div><div class="cream-puff"></div><div class="cream-puff"></div>';
+                } else if(spreadType === "matcha-base") {
+                    spreadL.innerHTML = '';
+                } else {
+                    spreadL.innerHTML = '<div class="sauce-drip"></div>';
+                }
+                status.innerHTML = "Arranging center fillings...";
+                postLog("LOAD_REG filling_val", "10101111");
+                postLog("RENDER_OBJ " + toppingType, "11101110");
+            }, 1700);
+
+            setTimeout(function() {
+                toppingL.className = "layer " + toppingType + " dropped";
+                if(toppingType === "strawberry-row") {
+                    toppingL.innerHTML = '<div class="berry"></div><div class="berry"></div><div class="berry"></div>';
+                } else if(toppingType === "mango-row") {
+                    toppingL.innerHTML = '<div class="mango-cube"></div><div class="mango-cube"></div><div class="mango-cube"></div>';
+                } else if(toppingType === "katsu-block") {
+                    toppingL.innerHTML = '<div class="katsu-texture"></div>';
+                } else {
+                    toppingL.innerHTML = '';
+                }
+                status.innerHTML = "Closing with top Shokupan slice...";
+                postLog("ALLOC_MEM bread_top", "10101011");
+                postLog("STACK_CONCAT", "11111111");
+            }, 2700);
+
+            setTimeout(function() {
+                tBread.className = "layer shokupan dropped";
+                status.innerHTML = "✨ Sando complete! Ready to present.";
+                postLog("SYS_EXIT 0 (SUCCESS)", "00000000");
+            }, 3700);
+        }
+
+        function eatSandwich() {
+            var layers = document.querySelectorAll('.layer');
+            var status = document.getElementById("status-text");
+            var terminal = document.getElementById("terminal-body");
+
+            status.innerHTML = "Gochisousama! That was delicious! 😋";
+            terminal.innerHTML = "";
+            postLog("FLUSH_REGISTER", "00001111");
+            postLog("CLEAR_MEM_STACK", "00000001");
+
+            layers.forEach(function(layer) {
+                layer.classList.add("eaten");
+            });
+
+            setTimeout(function() {
+                layers.forEach(function(layer) {
+                    layer.className = "layer";
+                    layer.innerHTML = "";
+                });
+                status.innerHTML = "Plate cleared. Ready for your next run.";
+            }, 400);
+        }
+    </script>
+</body>
+</html>
