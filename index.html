@@ -128,194 +128,293 @@
             overflow: hidden; 
             border: 1px solid #ebdcd0; 
             flex-shrink: 0;
-            perspective: 1000px;
+        }
+
+        /* PLATE BASE */
+        .plate { 
+            position: absolute;
+            width: 220px; 
+            height: 220px; 
+            background-color: #ffffff; 
+            border: 4px solid #3a2212;
+            border-radius: 28px; 
+            transform: rotateX(60deg) rotateZ(-45deg);
+            box-shadow: -14px 14px 0px rgba(0,0,0,0.08);
+            top: 130px;
         }
 
         /* ISOMETRIC STACK CONTAINER */
         .iso-sandwich-stack {
-            position: relative;
-            width: 150px;
-            height: 150px;
+            position: absolute;
+            width: 160px;
+            height: 160px;
             transform-style: preserve-3d;
             transform: rotateX(60deg) rotateZ(-45deg);
-            margin-top: 40px;
+            top: 160px;
         }
 
         /* 🍞 ISOMETRIC INGREDIENT BASE CLASS */
         .layer { 
             position: absolute;
-            width: 150px; 
-            height: 150px;
+            top: 0;
+            left: 0;
+            width: 160px; 
+            height: 160px;
             opacity: 0; 
             transform: translateZ(300px); 
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.25), opacity 0.3s; 
-            border-radius: 12px;
+            border-radius: 14px;
             box-sizing: border-box;
-            border: 3px solid #3a2212;
+            border: 3.5px solid #3a2212;
         }
 
         /* LAYER Z-INDEX STACKING POSITIONS WHEN DROPPED */
         #bottom-bread.dropped { opacity: 1; transform: translateZ(0px); }
-        #layer-spread.dropped  { opacity: 1; transform: translateZ(20px); }
-        #layer-topping.dropped { opacity: 1; transform: translateZ(40px); }
-        #top-bread.dropped    { opacity: 1; transform: translateZ(75px); }
+        #layer-spread.dropped  { opacity: 1; transform: translateZ(24px); }
+        #layer-topping.dropped { opacity: 1; transform: translateZ(48px); }
+        #top-bread.dropped    { opacity: 1; transform: translateZ(85px); }
 
         /* 🍞 SHOKUPAN BREAD (ISOMETRIC BLOCK) */
         .shokupan { 
             background: #fffdf5; 
             box-shadow: 
                 -8px 8px 0px #e2b980, 
-                -8px 8px 0px 3px #3a2212,
+                -8px 8px 0px 3.5px #3a2212,
                 inset 0 0 12px #f3e5ca; 
         }
 
         /* 🥛 SWEET WHIPPED CREAM */
         .cream-base { 
             background: #ffffff; 
-            box-shadow: 
-                -6px 6px 0px #e2e8f0, 
-                -6px 6px 0px 3px #3a2212; 
-        }
-
-        /* 🍵 UJI MATCHA CREAM */
-        .matcha-base { 
-            background: #8aa859; 
-            box-shadow: 
-                -6px 6px 0px #5e7737, 
-                -6px 6px 0px 3px #3a2212; 
-        }
-
-        /* 🍫 TONKATSU SAUCE */
-        .sauce-base { 
-            background: #542d17; 
-            box-shadow: 
-                -4px 4px 0px #31180a, 
-                -4px 4px 0px 3px #3a2212; 
-        }
-
-        /* 🍓 FRESH STRAWBERRIES */
-        .strawberry-row { 
-            background: rgba(244, 63, 94, 0.15); 
-            box-shadow: 
-                -8px 8px 0px #be123c, 
-                -8px 8px 0px 3px #3a2212; 
+            box-shadow: -6px 6px 0px #cbd5e1, -6px 6px 0px 3.5px #3a2212; 
             display: flex;
             align-items: center;
             justify-content: space-evenly;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
-        .berry {
+        .cream-dollop {
             width: 44px;
             height: 44px;
-            background: radial-gradient(circle at 50% 50%, #fff1f2 0%, #fda4af 35%, #e11d48 70%, #9f1239 100%);
-            border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+            background: #ffffff;
+            border-radius: 50%;
             border: 2px solid #3a2212;
             position: relative;
-            box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+            box-shadow: inset -3px -3px 0px #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .cream-dollop::before {
+            content: '';
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: #f1f5f9;
+            clip-path: polygon(50% 0%, 63% 38%, 100% 50%, 63% 63%, 50% 100%, 38% 63%, 0% 50%, 38% 38%);
+        }
+
+        /* 🍵 UJI MATCHA CREAM */
+        .matcha-base { 
+            background: #84cc16; 
+            box-shadow: -6px 6px 0px #3f6212, -6px 6px 0px 3.5px #3a2212; 
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 10px;
+        }
+
+        .matcha-dollop {
+            width: 44px;
+            height: 44px;
+            background: #84cc16;
+            border-radius: 50%;
+            border: 2px solid #3a2212;
+            position: relative;
+            box-shadow: inset -3px -3px 0px #4d7c0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matcha-dollop::before {
+            content: '';
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: #a3e635;
+            clip-path: polygon(50% 0%, 63% 38%, 100% 50%, 63% 63%, 50% 100%, 38% 63%, 0% 50%, 38% 38%);
+        }
+
+        /* 🍫 SAVORY TONKATSU SAUCE */
+        .sauce-base { 
+            background: linear-gradient(135deg, #431f0d 0%, #2a1206 100%); 
+            box-shadow: 
+                -5px 5px 0px #1a0b03, 
+                -5px 5px 0px 3.5px #3a2212; 
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sauce-base::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            right: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            transform: skewX(-20deg);
+        }
+
+        /* 🍓 REALISTIC SLICED STRAWBERRIES (NO FLOWERS) */
+        .strawberry-row { 
+            background: rgba(254, 226, 226, 0.4); 
+            box-shadow: -8px 8px 0px #be123c, -8px 8px 0px 3.5px #3a2212; 
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 10px;
+        }
+
+        .berry {
+            width: 44px;
+            height: 50px;
+            background: #e11d48;
+            border-radius: 50% 50% 30% 30% / 40% 40% 60% 60%;
+            border: 2.5px solid #3a2212;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 0 2px #be123c, inset -3px -3px 0px #9f1239;
+            overflow: hidden;
+        }
+
         .berry::before {
             content: '';
-            width: 16px;
-            height: 16px;
-            background: #ffffff;
-            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
-            opacity: 0.85;
+            position: absolute;
+            width: 26px;
+            height: 32px;
+            background: radial-gradient(circle, #ffffff 15%, #ffe4e6 45%, #fda4af 85%);
+            border-radius: 50% 50% 30% 30% / 40% 40% 60% 60%;
+            border: 1.5px dashed #f43f5e;
         }
 
         .berry::after {
-            content: '•  •\n•  •';
-            white-space: pre;
+            content: '';
             position: absolute;
-            color: #fef08a;
-            font-size: 6px;
-            top: 4px;
-            opacity: 0.9;
-            text-shadow: 1px 1px 0px #3a2212;
+            width: 8px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+            top: 8px;
+            opacity: 0.95;
         }
 
         /* 🥭 MIYAZAKI MANGO */
         .mango-row { 
-            background: rgba(251, 146, 60, 0.2); 
-            box-shadow: 
-                -8px 8px 0px #c2410c, 
-                -8px 8px 0px 3px #3a2212; 
+            background: #ffedd5; 
+            box-shadow: -8px 8px 0px #c2410c, -8px 8px 0px 3.5px #3a2212; 
             display: flex;
             align-items: center;
             justify-content: space-evenly;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .mango-cube {
             width: 42px;
             height: 42px;
-            background: linear-gradient(135deg, #fef08a 0%, #fb923c 60%, #ea580c 100%);
-            border-radius: 10px;
+            background: #f97316;
+            border-radius: 6px;
             border: 2px solid #3a2212;
             position: relative;
-            box-shadow: inset -3px -3px 0px rgba(194, 65, 12, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.8);
-            overflow: hidden;
+            box-shadow: inset -4px -4px 0px #c2410c;
         }
 
         .mango-cube::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(90deg, transparent 45%, #3a2212 45%, #3a2212 55%, transparent 55%),
-                linear-gradient(0deg, transparent 45%, #3a2212 45%, #3a2212 55%, transparent 55%);
-            background-size: 14px 14px;
-            opacity: 0.35;
-        }
-
-        .mango-cube::after {
-            content: '';
-            position: absolute;
-            top: 4px;
-            left: 5px;
-            width: 10px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            transform: rotate(-25deg);
+            top: 3px;
+            left: 3px;
+            right: 8px;
+            bottom: 8px;
+            background: #fbbf24;
+            border-radius: 3px;
         }
 
         /* 🥩 CRISPY PORK KATSU */
         .katsu-block { 
             background: #d97706; 
-            box-shadow: 
-                -12px 12px 0px #78350f, 
-                -12px 12px 0px 3px #3a2212; 
+            box-shadow: -12px 12px 0px #78350f, -12px 12px 0px 3.5px #3a2212; 
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .katsu-cut {
+            width: 40px;
+            height: 135px;
+            background: linear-gradient(90deg, #fef3c7 0%, #fde68a 35%, #b45309 70%, #78350f 100%);
+            border-radius: 6px;
+            border: 2px solid #3a2212;
+            position: relative;
+            box-shadow: inset 0 0 6px rgba(120, 53, 15, 0.6);
+            z-index: 1;
+        }
+
+        .katsu-cut::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: -5px;
+            right: -5px;
+            height: 18px;
+            background: #31180a;
+            border-radius: 10px;
+            transform: rotate(-12deg);
         }
 
         /* 🍳 THICK TAMAGO OMELET */
         .tamago-block { 
-            background: #facc15; 
-            box-shadow: 
-                -12px 12px 0px #ca8a04, 
-                -12px 12px 0px 3px #3a2212; 
+            background: linear-gradient(135deg, #fef08a 0%, #facc15 60%, #eab308 100%); 
+            box-shadow: -12px 12px 0px #ca8a04, -12px 12px 0px 3.5px #3a2212; 
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        /* PLATE BASE */
-        .plate { 
+        .tamago-slice {
+            width: 40px;
+            height: 135px;
+            background: radial-gradient(ellipse at 50% 50%, #fffbebe6 20%, #fde047 65%, #eab308 100%);
+            border-radius: 8px;
+            border: 2px solid #3a2212;
+            position: relative;
+            box-shadow: inset 0 0 6px rgba(202, 138, 4, 0.5);
+            z-index: 1;
+        }
+
+        .tamago-slice::before {
+            content: '';
             position: absolute;
-            width: 210px; 
-            height: 210px; 
-            background-color: #ffffff; 
-            border: 4px solid #3a2212;
-            border-radius: 24px; 
-            transform: rotateX(60deg) rotateZ(-45deg) translateZ(-15px);
-            box-shadow: -12px 12px 0px rgba(0,0,0,0.1);
+            top: 15px;
+            left: 6px;
+            right: 6px;
+            bottom: 15px;
+            border: 2px dashed rgba(161, 98, 7, 0.45);
+            border-radius: 6px;
         }
 
-        /* Trigger Utility States */
+        /* Utility trigger states */
         .eaten { transform: translateZ(500px) scale(0) !important; opacity: 0 !important; transition: all 0.4s ease-in !important; }
         
         #status-text { font-weight: bold; color: #8a7b71; min-height: 24px; margin-top: 15px; font-size: 15px; text-align: center; }
@@ -374,7 +473,6 @@
     <script>
         function postLog(assemblyText, binaryText) {
             var terminal = document.getElementById("terminal-body");
-
             if (terminal.innerHTML.indexOf("// Awaiting") !== -1) {
                 terminal.innerHTML = "";
             }
@@ -413,6 +511,13 @@
 
             setTimeout(function() {
                 spreadL.className = "layer " + spreadType + " dropped";
+                if(spreadType === "cream-base") {
+                    spreadL.innerHTML = '<div class="cream-dollop"></div><div class="cream-dollop"></div><div class="cream-dollop"></div>';
+                } else if(spreadType === "matcha-base") {
+                    spreadL.innerHTML = '<div class="matcha-dollop"></div><div class="matcha-dollop"></div><div class="matcha-dollop"></div>';
+                } else if(spreadType === "sauce-base") {
+                    spreadL.innerHTML = '';
+                }
                 status.innerHTML = "Arranging center fillings...";
                 postLog("LOAD_REG filling_val", "10101111");
                 postLog("RENDER_OBJ " + toppingType, "11101110");
@@ -424,6 +529,10 @@
                     toppingL.innerHTML = '<div class="berry"></div><div class="berry"></div><div class="berry"></div>';
                 } else if(toppingType === "mango-row") {
                     toppingL.innerHTML = '<div class="mango-cube"></div><div class="mango-cube"></div><div class="mango-cube"></div>';
+                } else if(toppingType === "katsu-block") {
+                    toppingL.innerHTML = '<div class="katsu-cut"></div><div class="katsu-cut"></div><div class="katsu-cut"></div>';
+                } else if(toppingType === "tamago-block") {
+                    toppingL.innerHTML = '<div class="tamago-slice"></div><div class="tamago-slice"></div><div class="tamago-slice"></div>';
                 }
                 status.innerHTML = "Closing with top Shokupan slice...";
                 postLog("ALLOC_MEM bread_top", "10101011");
