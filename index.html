@@ -1,4 +1,3 @@
-Here is the updated, complete index.html file. It combines the 3D isometric layout, bold line-art outlines, thick blocky ingredient layers, and fully clean JS script tags:
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,7 +193,7 @@ Here is the updated, complete index.html file. It combines the 3D isometric layo
                 -4px 4px 0px 3px #3a2212; 
         }
 
-                /* 🍓 FRESH STRAWBERRIES: Sliced cross-section look */
+        /* 🍓 FRESH STRAWBERRIES */
         .strawberry-row { 
             background: rgba(244, 63, 94, 0.15); 
             box-shadow: 
@@ -207,8 +206,8 @@ Here is the updated, complete index.html file. It combines the 3D isometric layo
         }
 
         .berry {
-            width: 55px;
-            height: 55px;
+            width: 44px;
+            height: 44px;
             background: radial-gradient(circle at 50% 50%, #fff1f2 0%, #fda4af 35%, #e11d48 70%, #9f1239 100%);
             border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
             border: 2px solid #3a2212;
@@ -219,44 +218,73 @@ Here is the updated, complete index.html file. It combines the 3D isometric layo
             justify-content: center;
         }
 
-        /* Inner white core starburst */
         .berry::before {
             content: '';
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: #ffffff;
             clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
             opacity: 0.85;
         }
 
-        /* Seed details on the outer rim */
         .berry::after {
             content: '•  •\n•  •';
             white-space: pre;
             position: absolute;
             color: #fef08a;
-            font-size: 7px;
-            top: 6px;
+            font-size: 6px;
+            top: 4px;
             opacity: 0.9;
             text-shadow: 1px 1px 0px #3a2212;
         }
 
         /* 🥭 MIYAZAKI MANGO */
         .mango-row { 
-            background: #fb923c; 
+            background: rgba(251, 146, 60, 0.2); 
             box-shadow: 
-                -10px 10px 0px #c2410c, 
-                -10px 10px 0px 3px #3a2212; 
+                -8px 8px 0px #c2410c, 
+                -8px 8px 0px 3px #3a2212; 
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-evenly;
+            border-radius: 8px;
         }
+
         .mango-cube {
-            width: 35px;
-            height: 35px;
-            background: #ffedd5;
-            border-radius: 6px;
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #fef08a 0%, #fb923c 60%, #ea580c 100%);
+            border-radius: 10px;
             border: 2px solid #3a2212;
+            position: relative;
+            box-shadow: inset -3px -3px 0px rgba(194, 65, 12, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+        }
+
+        .mango-cube::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 45%, #3a2212 45%, #3a2212 55%, transparent 55%),
+                linear-gradient(0deg, transparent 45%, #3a2212 45%, #3a2212 55%, transparent 55%);
+            background-size: 14px 14px;
+            opacity: 0.35;
+        }
+
+        .mango-cube::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 5px;
+            width: 10px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            transform: rotate(-25deg);
         }
 
         /* 🥩 CRISPY PORK KATSU */
@@ -393,9 +421,9 @@ Here is the updated, complete index.html file. It combines the 3D isometric layo
             setTimeout(function() {
                 toppingL.className = "layer " + toppingType + " dropped";
                 if(toppingType === "strawberry-row") {
-                    toppingL.innerHTML = '<div class="berry"></div><div class="berry"></div>';
+                    toppingL.innerHTML = '<div class="berry"></div><div class="berry"></div><div class="berry"></div>';
                 } else if(toppingType === "mango-row") {
-                    toppingL.innerHTML = '<div class="mango-cube"></div><div class="mango-cube"></div>';
+                    toppingL.innerHTML = '<div class="mango-cube"></div><div class="mango-cube"></div><div class="mango-cube"></div>';
                 }
                 status.innerHTML = "Closing with top Shokupan slice...";
                 postLog("ALLOC_MEM bread_top", "10101011");
